@@ -73,7 +73,7 @@ export const useExerciseStore = defineStore('exercise', {
         let result = await axios.post (this.baseUrl + '/login',user)
         localStorage.setItem("access_token",result.data.access_token)
         localStorage.setItem("email",result.data.email)
-        localStorage.setItem("role",result.data.username)
+        localStorage.setItem("status",result.data.status)
 
         Swal.fire("Good job!", "Success Login!", "success");
         this.email = localStorage.email
