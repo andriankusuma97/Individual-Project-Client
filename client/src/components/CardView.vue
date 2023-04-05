@@ -16,7 +16,7 @@
       // }
     },
     created(){
-      this.fetchExercise()
+      // this.fetchExercise()
     }
   }
 </script>
