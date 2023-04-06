@@ -1,13 +1,14 @@
 <script>
   import {RouterView,RouterLink} from 'vue-router'
   import Swal from 'sweetalert2'
-  import { mapState } from 'pinia';
+  import { mapActions, mapState } from 'pinia';
   import { useExerciseStore } from '../stores/exercise';
   export default{
     computed:{
       ...mapState(useExerciseStore,['email'])
     },
     methods:{
+      ...mapActions(useExerciseStore,['getMidtrans']),
       handleLogout(){
         Swal.fire({
           title: "Are you sure?",
@@ -25,6 +26,21 @@
         });
       }
     },
+    midtrans(){
+      Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "qeustion",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, Subscribe!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.getMidtrans()
+          }
+        });
+      },
     created(){
       this.email = localStorage.email
     }
@@ -41,10 +57,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav w-3">
         <li class="nav-item">
-         <router-link class="nav-link" to="/login">Go to Login</router-link>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Premium</a>
+          <a @click.prevent="midtrans" class="nav-link" href="">Premium</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

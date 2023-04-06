@@ -173,9 +173,9 @@
                   </div>
                 </div>
                 <div class="row">
-                    <CardView v-show="showRekom === false && showKategori === false" />
                     <RekomView v-show="showRekom === true && showKategori === false" />
                     <RekomView v-if="showKategori === true"/>
+                    <CardView v-show="showRekom === false && showKategori === false" />
                 </div>
               </div>
             </div>

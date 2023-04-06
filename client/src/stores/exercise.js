@@ -5,8 +5,8 @@ import Swal from 'sweetalert2'
 
 export const useExerciseStore = defineStore('exercise', {
   state: () => ({ 
-    // baseUrl : 'https://rentdorz-production.up.railway.app',
-    baseUrl : 'http://localhost:3000',
+    baseUrl : 'https://individual-project-production-7d3c.up.railway.app',
+    // baseUrl : 'http://localhost:3000',
     listExercise : [],
     listBmi : [],
     listRekomendasi : [],
@@ -114,12 +114,12 @@ export const useExerciseStore = defineStore('exercise', {
       }
     },
 
-    async handleGithubLogin(response){
+    async handleGoogleLogin(response){
       try {
         console.log(response,"<<<<<<<<<ini response")
         const googleAccessToken = response.credential;
         const user = await axios ({
-          url: this.baseUrl + '/pub/register/google',
+          url: this.baseUrl + '/register/google',
           method: 'post',
           headers: {
             google_token: googleAccessToken,
@@ -139,7 +139,44 @@ export const useExerciseStore = defineStore('exercise', {
       }
     },
 
+    async changeStatus(){
+      try {
+        const {data} = await axios ({
+          url: this.baseUrl + '/exercise/status',
+          method: 'patch',
+          headers:{
+            access_token : localStorage.access_token,
+          }
+        })
+        
+      } catch (error) {
+        console.log(error)
+        Swal.fire("Cancelled", `${error.responseJSON.message}`, "error");
+      }
+    },
 
+    async getMidtrans(){
+      try {
+
+        const {data} = await axios({
+          url:this.baseUrl+ "/exercise/token",
+          method: 'post',
+          headers:{
+            access_token:localStorage.access_token
+          }
+        })
+        const cb = this.changeStatus()
+        window.snap.pay(data.token, {
+          onSuccess: function(result){
+            cb()
+          },
+        })
+      } catch (error) {
+        
+      }
+    },
+
+  
 
 
    

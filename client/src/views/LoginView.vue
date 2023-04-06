@@ -14,13 +14,13 @@
     },
    
     methods:{
-      ...mapActions(useExerciseStore,['handleLogin']),
+      ...mapActions(useExerciseStore,['handleLogin','handleGoogleLogin']),
       submitLogin(){
         this.handleLogin(this.user)
       },
-      // callback(response){
-      //   this.handleGoogleLogin(response)
-      // }
+      callback(response){
+        this.handleGoogleLogin(response)
+      }
     },
   }
 </script>
@@ -57,7 +57,7 @@
             <div class="pt-1 mb-4 text-center">
               <button class="btn btn-info btn-lg btn-block" type="submit">Login</button> <br> <br>
               <h4 class="text-center">OR</h4> <br>
-              <button class="btn btn-info btn-lg btn-block" type="button">GitHub</button>
+              <button class="btn btn-info btn-lg btn-block" type="button"><GoogleLogin :callback="callback" prompt /></button>
             </div>
 
             
