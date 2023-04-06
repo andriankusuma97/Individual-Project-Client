@@ -33,7 +33,6 @@
         <ul>
           <li><i class="fa fa-star"></i> 4.8</li>
         </ul>
-        <button @click="tesBut">tes</button>
       </div>
     </div>
 </template>

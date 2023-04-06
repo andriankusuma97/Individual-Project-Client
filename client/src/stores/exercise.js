@@ -10,6 +10,7 @@ export const useExerciseStore = defineStore('exercise', {
     listExercise : [],
     listBmi : [],
     listRekomendasi : [],
+    listKategori : [],
     email: localStorage.email ,
   
       
@@ -33,10 +34,24 @@ export const useExerciseStore = defineStore('exercise', {
         Swal.fire("Cancelled", `${error.responseJSON.message}`, "error");
       }
     },
+    async fetchKategori(){
+      try {
+        const {data} = await axios ({
+          url: this.baseUrl + '/exercise/type',
+          method: 'get',
+        })
+        console.log(data)
+        this.listKategori = data
+        console.log(this.listExercise,"<<<< dari pinia")
+      } catch (error) {
+        console.log(error)
+        Swal.fire("Cancelled", `${error.responseJSON.message}`, "error");
+      }
+    },
     async fetchBmi(value){
       try {
         const {data} = await axios ({
-          url: this.baseUrl + '/bmi',
+          url: this.baseUrl + '/exercise/bmi',
           method: 'post',
           data: value,
         })
@@ -56,6 +71,9 @@ export const useExerciseStore = defineStore('exercise', {
         const {data} = await axios ({
           url: this.baseUrl + '/exercise/rekomendasi/'+ value,
           method: 'get',
+          headers : {
+            access_token : localStorage.access_token
+          }
           
         })
         console.log(data)
